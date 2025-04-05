@@ -1,26 +1,37 @@
 {
-  "name": "ens-index-ipfs-cli",
+  "name": "ens-pin",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI tool for managing ENS-IPFS indexing services",
   "type": "commonjs",
-  "main": "src/index.ts",
+  "main": "src/ens-index-ipfs-cli.ts",
   "bin": {
-    "ens-index-ipfs-cli": "./dist/ens-index-ipfs-cli.js"
+    "ens-pin": "./dist/ens-pin.js"
   },
   "scripts": {
-    "build": "esbuild src/ens-index-ipfs-cli.ts --bundle --platform=node --outfile=dist/ens-index-ipfs-cli.js",
-    "dev": "pnpm build && dist/ens-index-ipfs-cli.js"
+    "build": "esbuild src/ens-index-ipfs-cli.ts --bundle --platform=node --outfile=dist/ens-pin.js",
+    "dev": "pnpm build && node dist/ens-pin.js",
+    "start": "pnpm dev",
+    "watch": "esbuild src/ens-index-ipfs-cli.ts --bundle --platform=node --outfile=dist/ens-pin.js --watch"
   },
-  "keywords": [],
+  "keywords": [
+    "ens",
+    "ipfs",
+    "cli",
+    "ethereum"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.14.0",
     "esbuild": "^0.25.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "@types/dockerode": "^3.3.23"
   },
   "dependencies": {
     "axios": "^1.8.4",
-    "commander": "^13.1.0"
+    "commander": "^13.1.0",
+    "dockerode": "^4.0.0",
+    "yaml": "^2.3.4",
+    "chalk": "^5.3.0"
   }
 }

@@ -2,22 +2,46 @@
 
 import { Command } from 'commander';
 import axios from 'axios';
+import { DockerManager } from './utils/docker';
 
 const program = new Command();
 const base_api_url = "http://0.0.0.0:42069"
+const dockerManager = new DockerManager();
 
 program
   .command('start')
-  .description('Start running the background service')
-  .action(() => {
-    console.log('Background service started.');
+  .description('Start all ENS-IPFS services using Docker')
+  .action(async () => {
+    try {
+      await dockerManager.startServices();
+    } catch (error) {
+      console.error('Failed to start services:', error);
+      process.exit(1);
+    }
   });
 
 program
   .command('stop')
-  .description('Stop running the background service')
-  .action(() => {
-    console.log('Background service stopped.');
+  .description('Stop all ENS-IPFS services')
+  .action(async () => {
+    try {
+      await dockerManager.stopServices();
+    } catch (error) {
+      console.error('Failed to stop services:', error);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('status')
+  .description('Check the status of all services')
+  .action(async () => {
+    try {
+      await dockerManager.checkStatus();
+    } catch (error) {
+      console.error('Failed to check status:', error);
+      process.exit(1);
+    }
   });
 
 const nodesCommand = program.command('nodes').description('Manage nodes');

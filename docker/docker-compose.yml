@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build:
+      context: ./dashboard
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:42069
+    depends_on:
+      - index-service
+
+  index-service:
+    build:
+      context: ./index-service
+    ports:
+      - "42069:42069"
+    environment:
+      - DATABASE_URL=postgresql://enspin:enspin@db:5432/enspin
+      - DATABASE_SCHEMA=public
+      - PONDER_RPC_URL_11155111=https://ethereum-sepolia.nodit.io/OAzjH1NSk876sjYsqxk0UffViScwumX3
+    depends_on:
+      - db
+      - ipfs
+
+  ipfs:
+    image: ipfs/kubo:v0.34.1
+    ports:
+      - "4001:4001"
+      - "4001:4001/udp"
+      - "8080:8080"
+      - "5001:5001"
+    environment:
+      - IPFS_PROFILE=server
+    command:
+      - "daemon"
+      - "--migrate=true"
+      - "--agent-version-suffix=docker"
+      - "--enable-pubsub-experiment"
+      - "--enable-namesys-pubsub"
+      - "--routing=dhtclient"
+    volumes:
+      - ipfs_data:/data/ipfs
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=enspin
+      - POSTGRES_PASSWORD=enspin
+      - POSTGRES_DB=enspin
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  ipfs_data:
+  db_data: 
