@@ -4,6 +4,9 @@
   "description": "",
   "type": "commonjs",
   "main": "src/index.ts",
+  "bin": {
+    "ens-index-ipfs-cli": "./dist/ens-index-ipfs-cli.js"
+  },
   "scripts": {
     "build": "esbuild src/ens-index-ipfs-cli.ts --bundle --platform=node --outfile=dist/ens-index-ipfs-cli.js",
     "dev": "pnpm build && dist/ens-index-ipfs-cli.js"
