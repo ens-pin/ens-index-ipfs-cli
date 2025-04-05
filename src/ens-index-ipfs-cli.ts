@@ -16,7 +16,27 @@ const dockerManager = new DockerManager();
 program
   .command('start')
   .description('Start all ENS-IPFS services using Docker')
-  .action(async () => {
+  .argument('[PONDER_RPC_URL_11155111]', 'RPC URL for ETH Sepolia network')
+  .argument('[POSTGRES_USER]', 'Postgres username')
+  .argument('[POSTGRES_PASSWORD]', 'Postgres password')
+  .argument('[POSTGRES_DB]', 'Postgres database name')
+  .action(async (PONDER_RPC_URL_11155111, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB) => {
+    //if any of the argument is missing, show error
+    if (!PONDER_RPC_URL_11155111) {
+      console.error('PONDER_RPC_URL_11155111 is required to start services.');
+      process.exit(1);
+    }
+
+    if(!POSTGRES_USER || !POSTGRES_PASSWORD || !POSTGRES_DB){
+      console.error('POSTGRES_USER, POSTGRES_PASSWORD and POSTGRES_DB are required to start services.');
+      process.exit(1);
+    }
+
+    process.env.PONDER_RPC_URL_11155111 = PONDER_RPC_URL_11155111;
+    process.env.POSTGRES_USER = POSTGRES_USER;
+    process.env.POSTGRES_PASSWORD = POSTGRES_PASSWORD;
+    process.env.POSTGRES_DB = POSTGRES_DB;
+
     try {
       await dockerManager.startServices();
     } catch (error) {
