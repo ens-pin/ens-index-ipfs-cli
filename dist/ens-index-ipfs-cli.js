@@ -17569,6 +17569,23 @@ nodesCommand.command("delete").description("Remove a node by ID").argument("<id>
     }
   );
 });
+program2.command("hosted-files").description("Get all hosted files").action(() => {
+  axios_default.get(base_api_url + "/hosted").then((response) => {
+    if (response.data["users"].length === 0) {
+      console.log("No hosted files found.");
+      return;
+    }
+    console.log("ID".padEnd(10) + "Name".padEnd(20) + "URL".padEnd(30) + "Type");
+    console.log("-".repeat(60));
+    response.data["users"].forEach((file) => {
+      console.log(
+        file.node.padEnd(100) + file.name.padEnd(50) + file.hash.padEnd(100) + file.file_size.toString().padEnd(10)
+      );
+    });
+  }).catch((error) => {
+    console.error("Error retrieving hosted files:", error.message);
+  });
+});
 program2.parse(process.argv);
 /*! Bundled license information:
 
