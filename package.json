@@ -5,8 +5,8 @@
   "type": "commonjs",
   "main": "src/index.ts",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
-    "run": "build && dist/index.js"
+    "build": "esbuild src/ens-index-ipfs-cli.ts --bundle --platform=node --outfile=dist/ens-index-ipfs-cli.js",
+    "dev": "pnpm build && dist/ens-index-ipfs-cli.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "axios": "^1.8.4",
     "commander": "^13.1.0"
   }
 }
