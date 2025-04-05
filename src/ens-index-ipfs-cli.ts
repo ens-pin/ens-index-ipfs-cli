@@ -28,7 +28,22 @@ nodesCommand
   .argument('[id]', 'Node ID to retrieve')
   .action((id) => {
     if (id) {
-      console.log(`Retrieving node with ID: ${id}`);
+      axios.get(base_api_url + '/nodes/' + id)
+        .then(response => {
+          let current_node = response.data["node"];
+          if (current_node) {
+            console.log(
+              current_node.id.padEnd(10) +
+              current_node.name.padEnd(20) +
+              current_node.url.padEnd(30) +
+              current_node.type.padEnd(10) + 
+              current_node.usage.toString()
+            );
+          }
+          else {
+            console.log(`Node with ID ${id} not found.`);
+          }
+        })
     } else {
       axios.get(base_api_url + '/nodes')
         .then(response => {
@@ -36,7 +51,6 @@ nodesCommand
             console.log('No nodes found.');
             return;
           }
-
           console.log('ID'.padEnd(10) + 'Name'.padEnd(20) + 'URL'.padEnd(30) + 'Type');
           console.log('-'.repeat(60));
           response.data["nodes"].forEach((node: { id: string, name: string; url: string, type: string; }) => {

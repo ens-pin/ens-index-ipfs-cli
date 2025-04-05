@@ -17502,7 +17502,16 @@ program2.command("stop").description("Stop running the background service").acti
 var nodesCommand = program2.command("nodes").description("Manage nodes");
 nodesCommand.command("get").description("Get all nodes or a specific node by ID").argument("[id]", "Node ID to retrieve").action((id) => {
   if (id) {
-    console.log(`Retrieving node with ID: ${id}`);
+    axios_default.get(base_api_url + "/nodes/" + id).then((response) => {
+      let current_node = response.data["node"];
+      if (current_node) {
+        console.log(
+          current_node.id.padEnd(10) + current_node.name.padEnd(20) + current_node.url.padEnd(30) + current_node.type.padEnd(10) + current_node.usage.toString()
+        );
+      } else {
+        console.log(`Node with ID ${id} not found.`);
+      }
+    });
   } else {
     axios_default.get(base_api_url + "/nodes").then((response) => {
       if (response.data["nodes"].length === 0) {
