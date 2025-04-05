@@ -17,9 +17,9 @@ services:
     ports:
       - "42069:42069"
     environment:
-      - DATABASE_URL=postgresql://enspin:enspin@db:5432/enspin
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - DATABASE_SCHEMA=public
-      - PONDER_RPC_URL_11155111=https://ethereum-sepolia.nodit.io/OAzjH1NSk876sjYsqxk0UffViScwumX3
+      - PONDER_RPC_URL_11155111=${PONDER_RPC_URL_11155111}
     depends_on:
       - db
       - ipfs
@@ -48,9 +48,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=enspin
-      - POSTGRES_PASSWORD=enspin
-      - POSTGRES_DB=enspin
+      - POSTGRES_USER=${POSTGRES_USER:-enspin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-enspin}
+      - POSTGRES_DB=${POSTGRES_DB:-enspin}
     volumes:
       - db_data:/var/lib/postgresql/data
 

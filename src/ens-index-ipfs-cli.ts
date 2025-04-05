@@ -3,6 +3,11 @@
 import { Command } from 'commander';
 import axios from 'axios';
 import { DockerManager } from './utils/docker';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const program = new Command();
 const base_api_url = "http://0.0.0.0:42069"
