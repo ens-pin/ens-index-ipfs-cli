@@ -53,12 +53,12 @@ nodesCommand
           }
           console.log('ID'.padEnd(10) + 'Name'.padEnd(20) + 'URL'.padEnd(30) + 'Type');
           console.log('-'.repeat(60));
-          response.data["nodes"].forEach((node: { id: string, name: string; url: string, type: string; }) => {
+          response.data["nodes"].forEach((node: { id: string, name: string; url: string, type: string}) => {
             console.log(
               node.id.padEnd(10) +
               node.name.padEnd(20) +
               node.url.padEnd(30) +
-              node.type
+              node.type.padEnd(10)
             );
           });
         })

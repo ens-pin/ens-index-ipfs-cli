@@ -17522,7 +17522,7 @@ nodesCommand.command("get").description("Get all nodes or a specific node by ID"
       console.log("-".repeat(60));
       response.data["nodes"].forEach((node) => {
         console.log(
-          node.id.padEnd(10) + node.name.padEnd(20) + node.url.padEnd(30) + node.type
+          node.id.padEnd(10) + node.name.padEnd(20) + node.url.padEnd(30) + node.type.padEnd(10)
         );
       });
     }).catch((error) => {
