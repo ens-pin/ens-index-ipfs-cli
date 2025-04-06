@@ -18682,7 +18682,7 @@ dotenv.config();
 var program2 = new Command();
 var base_api_url = "http://0.0.0.0:42069";
 var dockerManager = new DockerManager();
-program2.command("start").description("Start all ENS-IPFS services using Docker").argument("[PONDER_RPC_URL_11155111]", "RPC URL for ETH Sepolia network").argument("[POSTGRES_USER]", "Postgres username").argument("[POSTGRES_PASSWORD]", "Postgres password").argument("[POSTGRES_DB]", "Postgres database name").action(async (PONDER_RPC_URL_11155111, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB) => {
+program2.command("start").description("Start all ENS-IPFS services using Docker").argument("[PONDER_RPC_URL_11155111]", "RPC URL for ETH Sepolia network").argument("[POSTGRES_USER]", "Postgres username").argument("[POSTGRES_PASSWORD]", "Postgres password").argument("[POSTGRES_DB]", "Postgres database name").argument("[PUBLIC_IP]", "Public IP address of the server").action(async (PONDER_RPC_URL_11155111, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, PUBLIC_IP) => {
   if (!PONDER_RPC_URL_11155111) {
     console.error("PONDER_RPC_URL_11155111 is required to start services.");
     process.exit(1);
@@ -18695,6 +18695,7 @@ program2.command("start").description("Start all ENS-IPFS services using Docker"
   process.env.POSTGRES_USER = POSTGRES_USER;
   process.env.POSTGRES_PASSWORD = POSTGRES_PASSWORD;
   process.env.POSTGRES_DB = POSTGRES_DB;
+  process.env.PUBLIC_IP = PUBLIC_IP;
   try {
     await dockerManager.startServices();
   } catch (error) {
